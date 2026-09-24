@@ -34,9 +34,9 @@ export function handleLeaveRoom(io, socket, reason, callback = null) {
     try {
         const room = leaveRoom(socket.id)
         if (room) {
-            io.to(room.id).emit("room:closed", { reason: io });
+            io.to(room.id).emit("room:closed", { reason });
+            io.socketsLeave(room.id)
         }
-        io.socketLeave(room.id)
         if (callback) {
             callback({ success: true })
         }
@@ -48,6 +48,6 @@ export function handleLeaveRoom(io, socket, reason, callback = null) {
 export function handelSocketEvent(io, socket) {
     socket.on("room:create", (data, callback) => handleCreateRoom(socket, data, callback));
     socket.on("room:join", (data, callback) => handleJoinRoom(io, socket, data, callback));
-    socket.on("room:leave", (callback) => handleLeaveRoom(io, socket, "player left", callback))
-    socket.on("disconnected", (callback) => handleLeaveRoom(io, socket, "player disconnected", callback))
+    socket.on("room:leave", (callback) => handleLeaveRoom(io, socket, "player_left", callback))
+    socket.on("disconnect", () => handleLeaveRoom(io, socket, "player_disconnected"))
 }

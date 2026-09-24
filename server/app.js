@@ -17,17 +17,13 @@ const io = new Server(server, {
     }
 })
 
+
 io.on("connect", (client) => {
     handelSocketEvent(io, client)
     console.log("client connected:", client.id);
-    client.on("disconnect", () => {
-        console.log("client disconnected:", client.id);
-    })
 })
-
 
 
 server.listen(PORT, () => {
     console.log(`server running on http://localhost:${PORT} / ws://localhost:${PORT}`);
-
 })
