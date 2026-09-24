@@ -3,7 +3,8 @@ import { Server } from "socket.io"
 import { createServer } from "http"
 import "dotenv/config"
 import helmet from "helmet"
-import { log } from "console"
+import { handelSocketEvent } from "./socketHandler.js"
+
 
 const PORT = process.env.PORT
 const app = express()
@@ -17,6 +18,7 @@ const io = new Server(server, {
 })
 
 io.on("connect", (client) => {
+    handelSocketEvent(io, client)
     console.log("client connected:", client.id);
     client.on("disconnect", () => {
         console.log("client disconnected:", client.id);
