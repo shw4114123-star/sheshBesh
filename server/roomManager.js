@@ -15,7 +15,6 @@ const rendomRoomId = () => {
     return roomId;
 }
 
-
 export function createRoom(socketId, playerName) {
     if (!playerName || !playerName.trim() || playerName.trim().length > 20) throw new createError("not a good player name", 400);
     if (socketToRoom.has(socketId)) throw new createError("the player alredy has an existing game", 409);
@@ -34,7 +33,6 @@ export function createRoom(socketId, playerName) {
     return room;
 }
 
-
 export function joinRoom(socketId, roomCode, playerName) {
     if (!playerName || !playerName.trim() || playerName.trim().length > 20) throw new createError("not a good player name", 400);
     if (socketToRoom.has(socketId)) throw new createError("this socket alredy has an existing game", 409);
@@ -48,7 +46,6 @@ export function joinRoom(socketId, roomCode, playerName) {
     return room;
 }
 
-
 export function leaveRoom(socketId) {
     const roomId = socketToRoom.get(socketId);
     if (!roomId) return;
@@ -59,7 +56,6 @@ export function leaveRoom(socketId) {
     rooms.delete(roomId);
     return room;
 }
-
 
 export function getRoomBySocketId(socketId) {
     const roomId = socketToRoom.get(socketId);
