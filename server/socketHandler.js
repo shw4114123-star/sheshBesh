@@ -41,7 +41,7 @@ export function handleLeaveRoom(io, socket, reason, callback = null) {
             callback({ success: true })
         }
     } catch (error) {
-
+        callback({ success: false, error: { message: error.message } })
     }
 }
 
